@@ -1,54 +1,65 @@
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-
-const LogIn = () => {
+const SignUp = () => {
   const [email, setEmail] = useState(false);
   const [pass, setpass] = useState(false);
+  const [con, setCon] = useState(false);
   const mailInputRef = useRef();
   const passwordInputRef = useRef();
+  const conformInputRef = useRef();
   const history = useHistory();
-
   function mailChangeHandler() {
     setEmail(true);
   }
   function passChangeHandler() {
     setpass(true);
   }
-  function navToSignUp() {
-    history.push("/");
+  function conChangeHandler() {
+    setCon(true);
+  }
+  function navToLogin() {
+    history.push("/Login");
   }
 
   const loginSubmitHandler = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBCCfgwCyOwJVyOt98XoUeYffa0QBCV_Yk",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: mailInputRef.current.value,
-            password: passwordInputRef.current.value,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
+
+    if (
+      String(passwordInputRef.current.value) ===
+      String(conformInputRef.current.value)
+    ) {
+      try {
+        const response = await fetch(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBCCfgwCyOwJVyOt98XoUeYffa0QBCV_Yk",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: mailInputRef.current.value,
+              password: passwordInputRef.current.value,
+              returnSecureToken: true,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          console.log("user created successfully.");
         }
-      );
-      if (response.ok) {
-        const res = await response.json();
-        localStorage.setItem("token", res.idToken);
-        console.log("user Logged in successfully.");
+      } catch (error) {
+        alert(error);
+        console.log(error);
       }
-    } catch (error) {
-      alert(error);
-      console.log(error);
+    } else {
+      alert("Password does not match!!");
     }
+
     mailInputRef.current.value = "";
     passwordInputRef.current.value = "";
+    conformInputRef.current.value = "";
     setEmail(false);
     setpass(false);
-    history.push("/Home");
+    setCon(false);
   };
   return (
     <>
@@ -71,7 +82,7 @@ const LogIn = () => {
                 fontWeight: "bold",
               }}
             >
-              Log In
+              Sign Up
             </legend>
             <label>E-Mail:</label>
             <br />
@@ -89,10 +100,18 @@ const LogIn = () => {
               onChange={passChangeHandler}
             />
             <br />
+            <label>Conform password:</label>
+            <br />
+            <input
+              type="password"
+              ref={conformInputRef}
+              onChange={conChangeHandler}
+            />
+            <br />
             <br />
             <button
               type="submit"
-              disabled={email && pass ? false : true}
+              disabled={email && pass && con ? false : true}
               style={{
                 width: "90%",
                 display: "flex",
@@ -102,7 +121,7 @@ const LogIn = () => {
                 marginLeft: "5%",
               }}
             >
-              Log In
+              Sign Up
             </button>
           </fieldset>
 
@@ -114,13 +133,13 @@ const LogIn = () => {
               color: "black",
               height: "10%",
             }}
-            onClick={navToSignUp}
+            onClick={navToLogin}
           >
-            Don't Have an Account? SignUp
+            Have an Account? Login
           </button>
         </form>
       </section>
     </>
   );
 };
-export default LogIn;
+export default SignUp;

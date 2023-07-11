@@ -1,10 +1,30 @@
 import "./App.css";
-import LogIn from "./Components/LoginPage/Login";
+import SignUp from "./Components/SignUpPage/SignUp";
 
+import Navig from "./Components/Navigation/Navig";
+import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
+import { Suspense } from "react";
+import LogIn from "../src/Components/LoginPage/LogIn";
+import Home from "./Components/HomePage/Home";
 function App() {
   return (
     <>
-      <LogIn />
+      <Navig />
+      <main>
+        <Suspense>
+          <Switch>
+            <Route path="/Home" exact>
+              <Home />
+            </Route>
+            <Route path="/" exact>
+              <SignUp />
+            </Route>
+            <Route path="/Login" exact>
+              <LogIn />
+            </Route>
+          </Switch>
+        </Suspense>
+      </main>
     </>
   );
 }
