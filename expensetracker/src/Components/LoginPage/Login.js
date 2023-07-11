@@ -38,7 +38,10 @@ const LogIn = () => {
       if (response.ok) {
         const res = await response.json();
         localStorage.setItem("token", res.idToken);
+        history.push("/Home");
         console.log("user Logged in successfully.");
+      } else {
+        alert("Login failed!!!");
       }
     } catch (error) {
       alert(error);
@@ -48,7 +51,6 @@ const LogIn = () => {
     passwordInputRef.current.value = "";
     setEmail(false);
     setpass(false);
-    history.push("/Home");
   };
   return (
     <>

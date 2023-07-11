@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import { Suspense } from "react";
 import LogIn from "../src/Components/LoginPage/LogIn";
 import Home from "./Components/HomePage/Home";
+import Profile from "./Components/ProfilePage/Profile";
 function App() {
   return (
     <>
@@ -21,6 +22,9 @@ function App() {
             </Route>
             <Route path="/Login" exact>
               <LogIn />
+            </Route>
+            <Route path="/Profile" exact>
+              <Profile />
             </Route>
           </Switch>
         </Suspense>
