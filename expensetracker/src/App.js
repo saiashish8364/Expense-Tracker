@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import LogIn from "../src/Components/LoginPage/LogIn";
 import Home from "./Components/HomePage/Home";
 import Profile from "./Components/ProfilePage/Profile";
+import PassReset from "./Components/PasswordReset/PassReset";
 function App() {
   const history = useHistory();
   useEffect(() => {
@@ -33,6 +34,9 @@ function App() {
             </Route>
             <Route path="/Profile" exact>
               <Profile />
+            </Route>
+            <Route path="/PassReset" exact>
+              <PassReset />
             </Route>
           </Switch>
         </Suspense>

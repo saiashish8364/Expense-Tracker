@@ -1,20 +1,24 @@
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import Context from "../Context/context";
 
 const Navig = () => {
-  const [showLogout, setShowLogout] = useState(false);
+  const ctx = useContext(Context);
+  const [showLogout, setShowLogout] = useState(ctx.isLoggenIn);
   const history = useHistory();
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setShowLogout(true);
     }
-  }, []);
+  }, [ctx.isLoggenIn]);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
     history.push("/Login");
     setShowLogout(false);
+    ctx.isLoggenIn = false;
   };
   return (
     <nav

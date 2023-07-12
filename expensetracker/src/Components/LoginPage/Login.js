@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import Context from "../Context/context";
 
 const LogIn = () => {
   const [email, setEmail] = useState(false);
@@ -7,6 +8,7 @@ const LogIn = () => {
   const mailInputRef = useRef();
   const passwordInputRef = useRef();
   const history = useHistory();
+  const ctx = useContext(Context);
 
   function mailChangeHandler() {
     setEmail(true);
@@ -39,6 +41,7 @@ const LogIn = () => {
         const res = await response.json();
         localStorage.setItem("token", res.idToken);
         history.push("/Home");
+        ctx.setLogin();
         console.log("user Logged in successfully.");
       } else {
         alert("Login failed!!!");
@@ -52,7 +55,9 @@ const LogIn = () => {
     setEmail(false);
     setpass(false);
   };
-
+  const forgotPasswordHandler = () => {
+    history.push("/PassReset");
+  };
   return (
     <>
       <section
@@ -135,6 +140,23 @@ const LogIn = () => {
           </button>
         </form>
       </section>
+      <button
+        onClick={forgotPasswordHandler}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "30%",
+          marginTop: "0.5rem",
+          color: "blue",
+          height: "10%",
+          padding: "1px",
+          border: "none",
+          background: "none",
+          marginLeft: "33%",
+        }}
+      >
+        Forgot password
+      </button>
     </>
   );
 };
