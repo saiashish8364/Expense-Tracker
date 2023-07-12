@@ -31,19 +31,65 @@ const Expenses = () => {
 
   return (
     <>
-      <section>
-        <form onSubmit={expenseSubmitHandler}>
-          <label>Expense Price</label>
-          <input type="number" ref={priceInputRef} />
-          <label>Expense Description</label>
-          <input type="text" ref={descriptionInputRef} />
-          <label>Expense Category</label>
-          <input type="text" ref={categoryInputref} />
-          <button type="submit">Add Expense</button>
-        </form>
+      <section
+        style={{
+          width: "50%",
+          display: "flex",
+          justifyContent: "center",
+          marginLeft: "25%",
+          marginTop: "3%",
+          height: "250px",
+          marginBottom: "3%",
+        }}
+      >
+        <fieldset>
+          <legend style={{ fontSize: "2rem", fontWeight: "revert-layer" }}>
+            Expense Details
+          </legend>
+          <form onSubmit={expenseSubmitHandler}>
+            <label style={{ marginRight: "10px" }}>Expense Price:</label>
+            <input type="number" ref={priceInputRef} />
+            <br />
+            <br />
+            <label>Expense Description:</label>
+            <input type="text" ref={descriptionInputRef} />
+            <br />
+            <br />
+            <label>Expense Category:</label>
+            <input type="text" ref={categoryInputref} />
+            <br />
+            <br />
+            <button
+              type="submit"
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                height: "25px",
+                marginTop: "3%",
+                borderRadius: "10px",
+                width: "35%",
+                marginLeft: "30%",
+              }}
+            >
+              Add Expense
+            </button>
+          </form>
+        </fieldset>
       </section>
-      <section>
-        <table>
+      <section
+        style={{
+          marginTop: "3%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <table
+          style={{
+            width: "80%",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
           <thead>
             <tr>
               <th>Expense Price</th>
@@ -55,9 +101,9 @@ const Expenses = () => {
             {expenses.map((ex) => {
               return (
                 <tr key={Math.random()}>
-                  <td>{ex.price}</td>
-                  <td>{ex.description}</td>
-                  <td>{ex.category}</td>
+                  <td style={{ justifyContent: "center" }}>Rs.{ex.price}</td>
+                  <td style={{ justifyContent: "center" }}>{ex.description}</td>
+                  <td style={{ justifyContent: "center" }}>{ex.category}</td>
                 </tr>
               );
             })}
