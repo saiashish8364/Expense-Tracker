@@ -1,8 +1,34 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Profile = () => {
   const nameInputRef = useRef();
   const urlInputRef = useRef();
+  async function fetchOnLoad() {
+    try {
+      const resp = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBCCfgwCyOwJVyOt98XoUeYffa0QBCV_Yk",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            idToken: String(localStorage.getItem("token")),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (resp.ok) {
+        const data = await resp.json();
+        nameInputRef.current.value = String(data.users[0].displayName);
+        urlInputRef.current.value = data.users[0].photoUrl;
+      }
+    } catch (error) {
+      alert(error);
+    }
+  }
+  useEffect(() => {
+    fetchOnLoad();
+  }, []);
   async function updateSubmitHandler(e) {
     e.preventDefault();
     try {
@@ -34,15 +60,50 @@ const Profile = () => {
   }
   return (
     <>
-      <h2>Contact Details:</h2>
-      <section>
+      <h2 style={{ marginTop: "50px", marginLeft: "30px" }}>
+        Contact Details:
+      </h2>
+      <section
+        style={{
+          justifyContent: "space-between",
+          display: "flex",
+          marginLeft: "10%",
+          fontSize: "1.15rem",
+        }}
+      >
         <form onSubmit={updateSubmitHandler}>
           <label>Full Name:</label>
-          <input type="text" ref={nameInputRef} />
-          <label>Profile Photo URL:</label>
-          <input type="text" ref={urlInputRef} />
           <br />
-          <button type="submit">Update</button>
+          <input
+            type="text"
+            ref={nameInputRef}
+            style={{ width: "125%", height: "12%" }}
+          />
+          <br />
+          <br />
+          <label>Profile Photo URL:</label>
+          <br />
+          <input
+            type="text"
+            ref={urlInputRef}
+            style={{ width: "125%", height: "12%" }}
+          />
+          <br />
+          <br />
+          <button
+            type="submit"
+            style={{
+              width: "65%",
+              height: "20%",
+              fontSize: "1rem",
+              marginLeft: "30%",
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "25px",
+            }}
+          >
+            Update
+          </button>
         </form>
       </section>
     </>

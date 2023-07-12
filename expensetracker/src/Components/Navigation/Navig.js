@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+
 const Navig = () => {
   return (
     <nav
@@ -15,7 +17,9 @@ const Navig = () => {
         }}
       >
         <h1>Expense Tracker</h1>
-        <p>Home</p>
+        <NavLink to="/Home">
+          <p style={{ color: "white" }}>Home</p>
+        </NavLink>
         <p>Products</p>
         <p>About Us</p>
       </div>

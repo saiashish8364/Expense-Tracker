@@ -68,9 +68,15 @@ const SignUp = () => {
           justifyContent: "center",
           display: "flex",
           marginTop: "2.5rem",
+          marginLeft: "10rem",
+          width: "60%",
+          height: "60%",
         }}
       >
-        <form onSubmit={loginSubmitHandler}>
+        <form
+          onSubmit={loginSubmitHandler}
+          style={{ width: "50%", justifyContent: "center", height: "100%" }}
+        >
           <fieldset>
             <legend
               style={{
@@ -90,6 +96,9 @@ const SignUp = () => {
               type="text"
               ref={mailInputRef}
               onChange={mailChangeHandler}
+              style={{
+                width: "90%",
+              }}
             />
             <br />
             <label>Password:</label>
@@ -98,6 +107,9 @@ const SignUp = () => {
               type="password"
               ref={passwordInputRef}
               onChange={passChangeHandler}
+              style={{
+                width: "90%",
+              }}
             />
             <br />
             <label>Conform password:</label>
@@ -106,6 +118,9 @@ const SignUp = () => {
               type="password"
               ref={conformInputRef}
               onChange={conChangeHandler}
+              style={{
+                width: "90%",
+              }}
             />
             <br />
             <br />
@@ -113,12 +128,12 @@ const SignUp = () => {
               type="submit"
               disabled={email && pass && con ? false : true}
               style={{
-                width: "90%",
-                display: "flex",
+                width: "40%",
+                height: "20%",
                 justifyContent: "center",
                 backgroundColor: "grey",
                 color: "white",
-                marginLeft: "5%",
+                marginLeft: "30%",
               }}
             >
               Sign Up
