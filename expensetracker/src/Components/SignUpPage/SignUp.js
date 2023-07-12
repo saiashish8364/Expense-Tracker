@@ -68,8 +68,8 @@ const SignUp = () => {
           justifyContent: "center",
           display: "flex",
           marginTop: "2.5rem",
-          marginLeft: "10rem",
-          width: "60%",
+          marginLeft: "25%",
+          width: "47.5%",
           height: "60%",
         }}
       >
