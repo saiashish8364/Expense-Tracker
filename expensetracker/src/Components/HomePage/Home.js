@@ -75,7 +75,24 @@ const Home = () => {
         </p>
       </section>
       <div>
-        {notVerify && <button onClick={verifyMail}>Verify E-Mail</button>}
+        {notVerify && (
+          <button
+            onClick={verifyMail}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginLeft: "45%",
+              marginTop: "5%",
+              color: "white",
+              backgroundColor: "black",
+              width: "12.5%",
+              height: "25px",
+              borderRadius: "25px",
+            }}
+          >
+            Verify E-Mail
+          </button>
+        )}
       </div>
     </>
   );

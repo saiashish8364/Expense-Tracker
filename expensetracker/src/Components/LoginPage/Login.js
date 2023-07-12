@@ -52,6 +52,7 @@ const LogIn = () => {
     setEmail(false);
     setpass(false);
   };
+
   return (
     <>
       <section
