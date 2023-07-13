@@ -39,8 +39,17 @@ const LogIn = () => {
       );
       if (response.ok) {
         const res = await response.json();
-        localStorage.setItem("token", res.idToken);
         history.push("/Home");
+        localStorage.setItem("token", res.idToken);
+        let re = mailInputRef.current.value;
+        let mail = "";
+        for (let i = 0; i < re.length; i++) {
+          if (re[i] !== "@" && re[i] !== ".") {
+            mail = mail + re[i];
+          }
+        }
+        localStorage.setItem("email", mail);
+
         ctx.setLogin();
         console.log("user Logged in successfully.");
       } else {

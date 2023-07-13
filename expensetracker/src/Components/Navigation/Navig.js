@@ -24,6 +24,7 @@ const Navig = () => {
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("email");
     history.push("/Login");
     setShowLogout(false);
     ctx.isLoggenIn = false;
@@ -57,12 +58,14 @@ const Navig = () => {
             <button
               onClick={logoutHandler}
               style={{
+                fontWeight: "bold",
+                fontSize: "1rem",
                 color: "black",
                 backgroundColor: "white",
-                height: "25px",
-                marginTop: "3%",
+                height: "30px",
+                marginTop: "2%",
                 borderRadius: "10px",
-                width: "10%",
+                width: "80px",
               }}
             >
               Logout
@@ -75,15 +78,19 @@ const Navig = () => {
           <Switch>
             <Route path="/Home" exact>
               {ctx.isLoggenIn && <Home />}
+              {!ctx.isLoggenIn && <LogIn />}
             </Route>
             <Route path="/" exact>
-              <SignUp />
+              {ctx.isLoggenIn && <Home />}
+              {!ctx.isLoggenIn && <SignUp />}
             </Route>
             <Route path="/Login" exact>
-              <LogIn />
+              {ctx.isLoggenIn && <Home />}
+              {!ctx.isLoggenIn && <LogIn />}
             </Route>
             <Route path="/Profile" exact>
-              <Profile />
+              {ctx.isLoggenIn && <Profile />}
+              {!ctx.isLoggenIn && <LogIn />}
             </Route>
             <Route path="/PassReset" exact>
               <PassReset />

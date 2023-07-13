@@ -1,28 +1,62 @@
-import { useRef, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
+let uniqueIds = [];
 const Expenses = () => {
-  const [expenses, setExpenses] = useState([
-    {
-      price: 20,
-      description: "study",
-      category: "books",
-    },
-    {
-      price: 15,
-      description: "Pani Puri",
-      category: "food",
-    },
-  ]);
+  const [expenses, setExpenses] = useState([]);
   const priceInputRef = useRef();
   const descriptionInputRef = useRef();
   const categoryInputref = useRef();
-  function expenseSubmitHandler(e) {
+
+  useEffect(() => {
+    async function fetchData() {
+      let t = String(localStorage.getItem("email"));
+      try {
+        const response = await fetch(
+          `https://expense-tracker-sharpner-default-rtdb.asia-southeast1.firebasedatabase.app/expenses/${t}.json`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          for (let key in data) {
+            if (!uniqueIds.includes(key)) {
+              uniqueIds.push(key);
+              let cpy = {
+                id: key,
+                category: data[key].category,
+                description: data[key].description,
+                price: data[key].price,
+              };
+              setExpenses((prev) => [...prev, cpy]);
+            }
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+  async function expenseSubmitHandler(e) {
     e.preventDefault();
     const data = {
       price: priceInputRef.current.value,
       description: descriptionInputRef.current.value,
       category: categoryInputref.current.value,
     };
+    try {
+      let t = String(localStorage.getItem("email"));
+      const response = await fetch(
+        `https://expense-tracker-sharpner-default-rtdb.asia-southeast1.firebasedatabase.app/expenses/${t}.json`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+      if (response.ok) {
+        alert("Expense Added.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     setExpenses([...expenses, data]);
     priceInputRef.current.value = "";
     descriptionInputRef.current.value = "";
