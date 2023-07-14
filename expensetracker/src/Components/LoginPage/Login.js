@@ -1,6 +1,7 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import Context from "../Context/context";
+import { useDispatch } from "react-redux";
+import { authActions } from "../Store/AuthSlice";
 
 const LogIn = () => {
   const [email, setEmail] = useState(false);
@@ -8,7 +9,7 @@ const LogIn = () => {
   const mailInputRef = useRef();
   const passwordInputRef = useRef();
   const history = useHistory();
-  const ctx = useContext(Context);
+  const dispatch = useDispatch();
 
   function mailChangeHandler() {
     setEmail(true);
@@ -39,6 +40,7 @@ const LogIn = () => {
       );
       if (response.ok) {
         const res = await response.json();
+        dispatch(authActions.login(String(res.idToken)));
         history.push("/Home");
         localStorage.setItem("token", res.idToken);
         let re = mailInputRef.current.value;
@@ -50,7 +52,6 @@ const LogIn = () => {
         }
         localStorage.setItem("email", mail);
 
-        ctx.setLogin();
         console.log("user Logged in successfully.");
       } else {
         alert("Login failed!!!");

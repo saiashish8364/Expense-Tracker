@@ -1,33 +1,31 @@
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import Context from "../Context/context";
-import SignUp from "../SignUpPage/SignUp";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import { Suspense } from "react";
-import LogIn from "../LoginPage/LogIn";
 import Home from "../HomePage/Home";
 import Profile from "../ProfilePage/Profile";
 import PassReset from "../PasswordReset/PassReset";
 import Expenses from "../Expenses/Expenses";
+import SignUp from "../SignUpPage/SignUp";
+import LogIn from "../LoginPage/LogIn";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { authActions } from "../Store/AuthSlice";
 
 const Navig = () => {
-  const ctx = useContext(Context);
-  const [showLogout, setShowLogout] = useState(ctx.isLoggenIn);
   const history = useHistory();
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setShowLogout(true);
-    }
-  }, [ctx.isLoggenIn]);
-
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const total = useSelector((state) => state.expense.total);
+  let isTot = false;
+  if (total > 500) {
+    isTot = true;
+  }
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
+    dispatch(authActions.logout());
     history.push("/Login");
-    setShowLogout(false);
-    ctx.isLoggenIn = false;
   };
   return (
     <>
@@ -54,7 +52,8 @@ const Navig = () => {
           </NavLink>
 
           <p>About Us</p>
-          {showLogout && (
+
+          {isAuth && (
             <button
               onClick={logoutHandler}
               style={{
@@ -63,12 +62,28 @@ const Navig = () => {
                 color: "black",
                 backgroundColor: "white",
                 height: "30px",
-                marginTop: "2%",
+                marginTop: "20px",
                 borderRadius: "10px",
                 width: "80px",
               }}
             >
               Logout
+            </button>
+          )}
+          {isAuth && isTot && (
+            <button
+              style={{
+                fontWeight: "bold",
+                fontSize: "0.85rem",
+                color: "black",
+                backgroundColor: "gold",
+                height: "45px",
+                marginTop: "15px",
+                borderRadius: "10px",
+                width: "90px",
+              }}
+            >
+              Activate Premium
             </button>
           )}
         </div>
@@ -77,27 +92,26 @@ const Navig = () => {
         <Suspense>
           <Switch>
             <Route path="/Home" exact>
-              {ctx.isLoggenIn && <Home />}
-              {!ctx.isLoggenIn && <LogIn />}
+              {isAuth && <Home />}
+              {!isAuth && <LogIn />}
             </Route>
             <Route path="/" exact>
-              {ctx.isLoggenIn && <Home />}
-              {!ctx.isLoggenIn && <SignUp />}
+              {!isAuth && <SignUp />}
+              {isAuth && <Home />}
             </Route>
             <Route path="/Login" exact>
-              {ctx.isLoggenIn && <Home />}
-              {!ctx.isLoggenIn && <LogIn />}
+              {<LogIn />}
             </Route>
             <Route path="/Profile" exact>
-              {ctx.isLoggenIn && <Profile />}
-              {!ctx.isLoggenIn && <LogIn />}
+              {isAuth && <Profile />}
+              {!isAuth && <LogIn />}
             </Route>
             <Route path="/PassReset" exact>
               <PassReset />
             </Route>
             <Route path="/Expenses" exact>
-              {ctx.isLoggenIn && <Expenses />}
-              {!ctx.isLoggenIn && <LogIn />}
+              {isAuth && <Expenses />}
+              {!isAuth && <LogIn />}
             </Route>
           </Switch>
         </Suspense>
