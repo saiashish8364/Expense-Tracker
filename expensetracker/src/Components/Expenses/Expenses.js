@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { expenseActions } from "../Store/EcpensesSlice";
 import { useSelector } from "react-redux";
+import DownloadCsv from "../Download/DownloadCsv";
 let editRef = "";
 
 const Expenses = () => {
@@ -314,22 +315,9 @@ const Expenses = () => {
             </tbody>
           </table>
         </section>
-        {/* <a>
-          <button
-            type="submit"
-            style={{
-              color: "white",
-              backgroundColor: "black",
-              height: "40px",
-              marginTop: "1.5%",
-              borderRadius: "10px",
-              width: "75px",
-              marginLeft: "45%",
-            }}
-          >
-            Download Expenses
-          </button>
-        </a> */}
+        <div>
+          <DownloadCsv />
+        </div>
       </div>
     </>
   );
