@@ -11,6 +11,8 @@ import LogIn from "../LoginPage/LogIn";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { authActions } from "../Store/AuthSlice";
+import { themeActions } from "../Store/ThemeReducer";
+import themeIcn from "../../Theme/theme.jpg";
 
 const Navig = () => {
   const history = useHistory();
@@ -18,7 +20,7 @@ const Navig = () => {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const total = useSelector((state) => state.expense.total);
   let isTot = false;
-  if (total > 500) {
+  if (total > 10000) {
     isTot = true;
   }
   const logoutHandler = () => {
@@ -26,6 +28,9 @@ const Navig = () => {
     localStorage.removeItem("email");
     dispatch(authActions.logout());
     history.push("/Login");
+  };
+  const themeChangeHandler = () => {
+    dispatch(themeActions.changeTheme());
   };
   return (
     <>
@@ -43,6 +48,25 @@ const Navig = () => {
             marginRight: "3rem",
           }}
         >
+          {isAuth && (
+            <button
+              onClick={themeChangeHandler}
+              style={{
+                height: "35px",
+                width: "25",
+                marginTop: "20px",
+                borderRadius: "5px",
+                fontWeight: "bolder",
+                marginLeft: "-30px",
+              }}
+            >
+              <img
+                style={{ height: "22.5px", width: "22.5px" }}
+                src={themeIcn}
+                alt="T"
+              />
+            </button>
+          )}
           <h1>Expense Tracker</h1>
           <NavLink to="/Home">
             <p style={{ color: "white" }}>Home</p>

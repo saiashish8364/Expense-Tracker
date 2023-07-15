@@ -5,7 +5,9 @@ import Navig from "./Components/Navigation/Navig";
 function App() {
   return (
     <>
-      <Navig />
+      <div>
+        <Navig />
+      </div>
     </>
   );
 }

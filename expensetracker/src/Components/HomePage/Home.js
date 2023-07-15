@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
-
+import { useSelector } from "react-redux";
 const Home = () => {
   const [notVerify, setVerify] = useState(true);
+  const theme = useSelector((state) => state.theme.themeShow);
   async function fetchOnLoad() {
     try {
       const resp = await fetch(
@@ -55,9 +56,12 @@ const Home = () => {
     }
   };
   return (
-    <>
+    <div style={{ backgroundColor: theme ? "grey" : "white", height: "750px" }}>
       <div
-        style={{ justifyContent: "center", display: "flex", marginTop: "20px" }}
+        style={{
+          justifyContent: "center",
+          display: "flex",
+        }}
       >
         <h1> Welcome to Expense Tracker!</h1>
       </div>
@@ -94,7 +98,7 @@ const Home = () => {
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 };
 export default Home;

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { expenseActions } from "../Store/EcpensesSlice";
+import { useSelector } from "react-redux";
 let editRef = "";
 
 const Expenses = () => {
@@ -12,6 +13,7 @@ const Expenses = () => {
   const editDescription = useRef();
   const editCategory = useRef();
   const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme.themeShow);
   async function fetchData() {
     setExpenses([]);
     let t = String(localStorage.getItem("email"));
@@ -137,173 +139,198 @@ const Expenses = () => {
   };
   return (
     <>
-      <section
-        style={{
-          width: "50%",
-          display: "flex",
-          justifyContent: "center",
-          marginLeft: "25%",
-          marginTop: "3%",
-          height: "250px",
-          marginBottom: "3%",
-        }}
+      <div
+        style={{ backgroundColor: theme ? "grey" : "white", height: "750px" }}
       >
-        <fieldset>
-          <legend style={{ fontSize: "2rem", fontWeight: "revert-layer" }}>
-            Expense Details
-          </legend>
-          <form onSubmit={expenseSubmitHandler}>
-            <label style={{ marginRight: "10px" }}>Expense Price:</label>
-            <input type="number" ref={priceInputRef} />
-            <br />
-            <br />
-            <label>Expense Description:</label>
-            <input type="text" ref={descriptionInputRef} />
-            <br />
-            <br />
-            <label>Expense Category:</label>
-            <input type="text" ref={categoryInputref} />
-            <br />
-            <br />
-            <button
-              type="submit"
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                height: "25px",
-                marginTop: "3%",
-                borderRadius: "10px",
-                width: "35%",
-                marginLeft: "30%",
-              }}
-            >
-              Add Expense
-            </button>
-          </form>
-        </fieldset>
-      </section>
-
-      <section
-        style={{
-          width: "90%",
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "3%",
-          height: "120px",
-          marginLeft: "6.5%",
-          marginBottom: "3%",
-        }}
-      >
-        <fieldset>
-          <legend
-            style={{
-              fontSize: "1.5rem",
-              textAlign: "center",
-              marginBottom: "10px",
-            }}
-          >
-            Edit Here
-          </legend>
-          <form onSubmit={editSubmitHandler}>
-            <label>Expense Price:</label>
-            <input
-              type="number"
-              ref={editPrice}
-              style={{ width: "50px", marginRight: "5px" }}
-            />
-            <label>Expense Description:</label>
-            <input
-              type="text"
-              ref={editDescription}
-              style={{ width: "160px", marginRight: "5px" }}
-            />
-            <label>Expense Category:</label>
-            <input type="text" ref={editCategory} style={{ width: "150px" }} />
-            <br />
-            <button
-              type="submit"
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                height: "25px",
-                marginTop: "1.5%",
-                borderRadius: "10px",
-                width: "65px",
-                marginLeft: "45%",
-              }}
-            >
-              Submit
-            </button>
-          </form>
-        </fieldset>
-      </section>
-
-      <section
-        style={{
-          marginTop: "3%",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <table
+        <section
           style={{
-            width: "80%",
+            width: "50%",
+            display: "flex",
             justifyContent: "center",
-            textAlign: "center",
+            marginLeft: "25%",
+            height: "250px",
+            marginBottom: "3%",
           }}
         >
-          <thead>
-            <tr>
-              <th>Expense Price</th>
-              <th>Expense Description</th>
-              <th>Expense Category</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map((ex) => {
-              return (
-                <tr key={Math.random()}>
-                  <td style={{ justifyContent: "center" }}>Rs.{ex.price}</td>
-                  <td style={{ justifyContent: "center" }}>{ex.description}</td>
-                  <td style={{ justifyContent: "center" }}>{ex.category}</td>
-                  <td>
-                    <button
-                      style={{
-                        color: "white",
-                        backgroundColor: "black",
-                        height: "25px",
-                        borderRadius: "10px",
-                        width: "65px",
-                      }}
-                      id={ex.id}
-                      onClick={expenseEditHandler}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        color: "white",
-                        backgroundColor: "black",
-                        height: "25px",
-                        borderRadius: "10px",
-                        width: "65px",
-                      }}
-                      id={ex.id}
-                      onClick={expenseDeleteHandler}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </section>
+          <fieldset>
+            <legend style={{ fontSize: "2rem", fontWeight: "revert-layer" }}>
+              Expense Details
+            </legend>
+            <form onSubmit={expenseSubmitHandler}>
+              <label style={{ marginRight: "10px" }}>Expense Price:</label>
+              <input type="number" ref={priceInputRef} />
+              <br />
+              <br />
+              <label>Expense Description:</label>
+              <input type="text" ref={descriptionInputRef} />
+              <br />
+              <br />
+              <label>Expense Category:</label>
+              <input type="text" ref={categoryInputref} />
+              <br />
+              <br />
+              <button
+                type="submit"
+                style={{
+                  color: "white",
+                  backgroundColor: "black",
+                  height: "25px",
+                  marginTop: "3%",
+                  borderRadius: "10px",
+                  width: "35%",
+                  marginLeft: "30%",
+                }}
+              >
+                Add Expense
+              </button>
+            </form>
+          </fieldset>
+        </section>
+
+        <section
+          style={{
+            width: "90%",
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "3%",
+            height: "120px",
+            marginLeft: "6.5%",
+            marginBottom: "3%",
+          }}
+        >
+          <fieldset>
+            <legend
+              style={{
+                fontSize: "1.5rem",
+                textAlign: "center",
+                marginBottom: "10px",
+              }}
+            >
+              Edit Here
+            </legend>
+            <form onSubmit={editSubmitHandler}>
+              <label>Expense Price:</label>
+              <input
+                type="number"
+                ref={editPrice}
+                style={{ width: "50px", marginRight: "5px" }}
+              />
+              <label>Expense Description:</label>
+              <input
+                type="text"
+                ref={editDescription}
+                style={{ width: "160px", marginRight: "5px" }}
+              />
+              <label>Expense Category:</label>
+              <input
+                type="text"
+                ref={editCategory}
+                style={{ width: "150px" }}
+              />
+              <br />
+              <button
+                type="submit"
+                style={{
+                  color: "white",
+                  backgroundColor: "black",
+                  height: "25px",
+                  marginTop: "1.5%",
+                  borderRadius: "10px",
+                  width: "65px",
+                  marginLeft: "45%",
+                }}
+              >
+                Submit
+              </button>
+            </form>
+          </fieldset>
+        </section>
+
+        <section
+          style={{
+            marginTop: "3%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <table
+            style={{
+              width: "80%",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>Expense Price</th>
+                <th>Expense Description</th>
+                <th>Expense Category</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {expenses.map((ex) => {
+                return (
+                  <tr key={Math.random()}>
+                    <td style={{ justifyContent: "center" }}>Rs.{ex.price}</td>
+                    <td style={{ justifyContent: "center" }}>
+                      {ex.description}
+                    </td>
+                    <td style={{ justifyContent: "center" }}>{ex.category}</td>
+                    <td>
+                      <button
+                        style={{
+                          color: "white",
+                          backgroundColor: "black",
+                          height: "25px",
+                          borderRadius: "10px",
+                          width: "65px",
+                        }}
+                        id={ex.id}
+                        onClick={expenseEditHandler}
+                      >
+                        Edit
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        style={{
+                          color: "white",
+                          backgroundColor: "black",
+                          height: "25px",
+                          borderRadius: "10px",
+                          width: "65px",
+                        }}
+                        id={ex.id}
+                        onClick={expenseDeleteHandler}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
+        {/* <a>
+          <button
+            type="submit"
+            style={{
+              color: "white",
+              backgroundColor: "black",
+              height: "40px",
+              marginTop: "1.5%",
+              borderRadius: "10px",
+              width: "75px",
+              marginLeft: "45%",
+            }}
+          >
+            Download Expenses
+          </button>
+        </a> */}
+      </div>
     </>
   );
 };

@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const nameInputRef = useRef();
   const urlInputRef = useRef();
+  const theme = useSelector((state) => state.theme.themeShow);
   async function fetchOnLoad() {
     try {
       const resp = await fetch(
@@ -60,52 +62,54 @@ const Profile = () => {
   }
   return (
     <>
-      <h2 style={{ marginTop: "50px", marginLeft: "30px" }}>
-        Contact Details:
-      </h2>
-      <section
-        style={{
-          justifyContent: "space-between",
-          display: "flex",
-          marginLeft: "10%",
-          fontSize: "1.15rem",
-        }}
+      <div
+        style={{ backgroundColor: theme ? "grey" : "white", height: "750px" }}
       >
-        <form onSubmit={updateSubmitHandler}>
-          <label>Full Name:</label>
-          <br />
-          <input
-            type="text"
-            ref={nameInputRef}
-            style={{ width: "125%", height: "12%" }}
-          />
-          <br />
-          <br />
-          <label>Profile Photo URL:</label>
-          <br />
-          <input
-            type="text"
-            ref={urlInputRef}
-            style={{ width: "125%", height: "12%" }}
-          />
-          <br />
-          <br />
-          <button
-            type="submit"
-            style={{
-              width: "65%",
-              height: "20%",
-              fontSize: "1rem",
-              marginLeft: "30%",
-              backgroundColor: "black",
-              color: "white",
-              borderRadius: "25px",
-            }}
-          >
-            Update
-          </button>
-        </form>
-      </section>
+        <h2 style={{ marginLeft: "30px" }}>Contact Details:</h2>
+        <section
+          style={{
+            justifyContent: "space-between",
+            display: "flex",
+            marginLeft: "10%",
+            fontSize: "1.15rem",
+          }}
+        >
+          <form onSubmit={updateSubmitHandler}>
+            <label>Full Name:</label>
+            <br />
+            <input
+              type="text"
+              ref={nameInputRef}
+              style={{ width: "125%", height: "12%" }}
+            />
+            <br />
+            <br />
+            <label>Profile Photo URL:</label>
+            <br />
+            <input
+              type="text"
+              ref={urlInputRef}
+              style={{ width: "125%", height: "12%" }}
+            />
+            <br />
+            <br />
+            <button
+              type="submit"
+              style={{
+                width: "65%",
+                height: "20%",
+                fontSize: "1rem",
+                marginLeft: "30%",
+                backgroundColor: "black",
+                color: "white",
+                borderRadius: "25px",
+              }}
+            >
+              Update
+            </button>
+          </form>
+        </section>
+      </div>
     </>
   );
 };
