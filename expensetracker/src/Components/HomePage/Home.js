@@ -56,7 +56,9 @@ const Home = () => {
     }
   };
   return (
-    <div style={{ backgroundColor: theme ? "grey" : "white", height: "750px" }}>
+    <div
+      style={{ backgroundColor: theme ? "grey" : "white", height: "1000px" }}
+    >
       <div
         style={{
           justifyContent: "center",

@@ -141,7 +141,7 @@ const Expenses = () => {
   return (
     <>
       <div
-        style={{ backgroundColor: theme ? "grey" : "white", height: "750px" }}
+        style={{ backgroundColor: theme ? "grey" : "white", height: "1000px" }}
       >
         <section
           style={{

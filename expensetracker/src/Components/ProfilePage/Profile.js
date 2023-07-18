@@ -63,7 +63,11 @@ const Profile = () => {
   return (
     <>
       <div
-        style={{ backgroundColor: theme ? "grey" : "white", height: "750px" }}
+        style={{
+          backgroundColor: theme ? "grey" : "white",
+          height: "1000px",
+          marginTop: "-20px",
+        }}
       >
         <h2 style={{ marginLeft: "30px" }}>Contact Details:</h2>
         <section

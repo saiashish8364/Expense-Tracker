@@ -44,6 +44,7 @@ const SignUp = () => {
           }
         );
         if (response.ok) {
+          alert("user created successfully.Proceed to Login");
           console.log("user created successfully.");
         }
       } catch (error) {
